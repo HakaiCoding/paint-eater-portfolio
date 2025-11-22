@@ -1,3 +1,27 @@
-// :host {
-//     display: block;
-// }
+:host {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: var(--mat-sys-surface);
+}
+
+/**
+ * Altura “segura” para la toolbar fija.
+ * 64px es el alto típico de la toolbar en desktop,
+ * + algo de margen para el blur y sombras.
+ */
+$app-toolbar-height: 72px;
+
+/* Contenido principal debajo de la toolbar “glass” */
+.app-shell__content {
+    flex: 1 1 auto;
+    padding: 1.5rem 1rem 2rem;
+    padding-block-start: $app-toolbar-height;
+}
+
+@media (max-width: 768px) {
+    .app-shell__content {
+        padding: 1rem 0.75rem 1.5rem;
+        padding-block-start: 64px; // algo más compacta en móvil
+    }
+}

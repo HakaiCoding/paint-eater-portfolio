@@ -1,1 +1,256 @@
-<p>home works!</p>
+<div class="home-page">
+    <!-- HERO -->
+    <section class="home-hero" aria-labelledby="home-hero-title">
+        <!-- EYEBROW / TAGLINE (arriba del todo) -->
+        <p class="home-hero__eyebrow">
+            Paint Eater · Miniature painting commissions
+        </p>
+
+        <!-- BANNER / LARGE CAROUSEL -->
+        <div class="home-hero__banner" aria-label="Showcase of painted armies" aria-roledescription="carousel">
+            <div class="home-hero__banner-viewport">
+                <div class="home-hero__banner-track" [style.transform]="'translateX(-' + currentSlide() * 100 + '%)'">
+                    @for (slide of heroSlides; track slide.id) {
+                    <figure class="home-hero__banner-slide">
+                        <img [ngSrc]="slide.imageSrc" [width]="slide.imageWidth" [height]="slide.imageHeight"
+                            sizes="100vw" [alt]="slide.alt" />
+                        <figcaption class="home-hero__banner-caption">
+                            <span class="home-hero__banner-label">
+                                {{ slide.label }}
+                            </span>
+                            <span class="home-hero__banner-title">
+                                {{ slide.title }}
+                            </span>
+                        </figcaption>
+                    </figure>
+                    }
+                </div>
+            </div>
+
+            <div class="home-hero__banner-controls">
+                <button type="button" mat-icon-button (click)="previousSlide()"
+                    aria-label="Show previous featured commission">
+                    <mat-icon>chevron_left</mat-icon>
+                </button>
+
+                <div class="home-hero__banner-dots" role="tablist" aria-label="Select featured commission">
+                    @for (slide of heroSlides; track slide.id; let i = $index) {
+                    <button type="button" class="home-hero__dot" [class.is-active]="currentSlide() === i"
+                        (click)="goToSlide(i)" role="tab" [attr.aria-selected]="currentSlide() === i"
+                        [attr.aria-label]="slide.title">
+                        <span class="visually-hidden">
+                            {{ slide.title }}
+                        </span>
+                    </button>
+                    }
+                </div>
+
+                <button type="button" mat-icon-button (click)="nextSlide()" aria-label="Show next featured commission">
+                    <mat-icon>chevron_right</mat-icon>
+                </button>
+            </div>
+        </div>
+
+        <!-- HERO CONTENT -->
+        <div class="home-hero__content">
+            <div class="home-hero__left">
+                <h1 id="home-hero-title" class="home-hero__title">
+                    Warhammer armies painted to look
+                    <span class="home-hero__title-highlight">
+                        battle-ready and unforgettable.
+                    </span>
+                </h1>
+
+                <p class="home-hero__subtitle">
+                    I paint Warhammer and tabletop miniatures for players who want their armies
+                    to look as good on the shelf as they do on the battlefield.
+                </p>
+
+                <div class="home-hero__specialties">
+                    <mat-chip-set aria-label="Miniature painting specialties">
+                        @for (tag of specialties; track tag) {
+                        <mat-chip>
+                            {{ tag }}
+                        </mat-chip>
+                        }
+                    </mat-chip-set>
+                </div>
+
+                <div class="home-hero__actions">
+                    <button mat-flat-button color="primary" [routerLink]="'/contact'"
+                        aria-label="Go to contact page to book a commission">
+                        <mat-icon aria-hidden="true">brush</mat-icon>
+                        <span>Book a commission</span>
+                    </button>
+
+                    <button mat-stroked-button color="primary" [routerLink]="'/gallery'"
+                        aria-label="View miniature painting gallery">
+                        <mat-icon aria-hidden="true">photo_library</mat-icon>
+                        <span>View painted armies</span>
+                    </button>
+                </div>
+
+                <div class="home-hero__highlights" aria-label="Commission stats">
+                    @for (item of heroHighlights; track item.label) {
+                    <div class="home-hero__highlight">
+                        <p class="home-hero__highlight-value">
+                            {{ item.value }}
+                        </p>
+                        <p class="home-hero__highlight-label">
+                            {{ item.label }}
+                        </p>
+                    </div>
+                    }
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE: INDEPENDENT CARD CAROUSEL -->
+            <div class="home-hero__right">
+                <section class="home-hero__card-carousel" aria-label="Featured commission details"
+                    aria-roledescription="carousel">
+                    <div class="home-hero__card-viewport">
+                        <div class="home-hero__card-track"
+                            [style.transform]="'translateX(-' + currentCardSlide() * 100 + '%)'">
+                            @for (card of heroCardSlides; track card.id; let i = $index) {
+                            <mat-card class="home-hero__art-card" appearance="outlined"
+                                [attr.aria-hidden]="currentCardSlide() === i ? 'false' : 'true'">
+                                <div class="home-hero__art-thumb">
+                                    <img [ngSrc]="card.imageSrc" [width]="card.imageWidth" [height]="card.imageHeight"
+                                        sizes="(max-width: 900px) 100vw, 35vw" [alt]="card.alt" />
+                                </div>
+
+                                <div class="home-hero__art-meta">
+                                    <p class="home-hero__art-label">
+                                        {{ card.label }}
+                                    </p>
+                                    <p class="home-hero__art-title">
+                                        {{ card.title }}
+                                    </p>
+                                    <p class="home-hero__art-caption">
+                                        {{ card.description }}
+                                    </p>
+                                </div>
+                            </mat-card>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="home-hero__card-controls">
+                        <button type="button" mat-icon-button (click)="previousCardSlide()"
+                            aria-label="Show previous commission details">
+                            <mat-icon>chevron_left</mat-icon>
+                        </button>
+
+                        <div class="home-hero__card-dots" role="tablist" aria-label="Select commission details">
+                            @for (card of heroCardSlides; track card.id; let i = $index) {
+                            <button type="button" class="home-hero__dot" [class.is-active]="currentCardSlide() === i"
+                                (click)="goToCardSlide(i)" role="tab" [attr.aria-selected]="currentCardSlide() === i"
+                                [attr.aria-label]="card.title">
+                                <span class="visually-hidden">
+                                    {{ card.title }}
+                                </span>
+                            </button>
+                            }
+                        </div>
+
+                        <button type="button" mat-icon-button (click)="nextCardSlide()"
+                            aria-label="Show next commission details">
+                            <mat-icon>chevron_right</mat-icon>
+                        </button>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHAT I DO -->
+    <section class="home-section home-section--services" aria-labelledby="home-services-title">
+        <header class="home-section__header">
+            <div>
+                <h2 id="home-services-title" class="home-section__title">
+                    What I paint
+                </h2>
+                <p class="home-section__subtitle">
+                    From first 500 points to full battle-forged armies, I focus on schemes that are
+                    easy to read, cohesive and fun to put on the table.
+                </p>
+            </div>
+
+            <button mat-stroked-button color="primary" [routerLink]="'/about'"
+                aria-label="Learn more about the painter">
+                <mat-icon aria-hidden="true">person</mat-icon>
+                <span>About the painter</span>
+            </button>
+        </header>
+
+        <div class="home-section__grid home-section__grid--services">
+            @for (service of services; track service.title) {
+            <mat-card class="home-service-card" appearance="outlined">
+                <mat-card-header>
+                    <div mat-card-avatar class="home-service-card__icon">
+                        <mat-icon aria-hidden="true">
+                            {{ service.icon }}
+                        </mat-icon>
+                    </div>
+                    <mat-card-title>
+                        {{ service.title }}
+                    </mat-card-title>
+                </mat-card-header>
+
+                <mat-card-content>
+                    <p class="home-service-card__description">
+                        {{ service.description }}
+                    </p>
+                </mat-card-content>
+            </mat-card>
+            }
+        </div>
+    </section>
+
+    <!-- HOW WE'LL WORK TOGETHER -->
+    <section class="home-section home-section--process" aria-labelledby="home-process-title">
+        <header class="home-section__header home-section__header--center">
+            <div>
+                <h2 id="home-process-title" class="home-section__title">
+                    How a commission works
+                </h2>
+                <p class="home-section__subtitle">
+                    A clear, three-step process so you always know what’s happening with your army
+                    and when it will be ready to deploy.
+                </p>
+            </div>
+        </header>
+
+        <ol class="home-section__grid home-section__grid--process">
+            @for (step of process; track step.title) {
+            <li class="home-process-step">
+                <mat-card appearance="outlined">
+                    <mat-card-header>
+                        <div mat-card-avatar class="home-process-step__icon">
+                            <mat-icon aria-hidden="true">
+                                {{ step.icon }}
+                            </mat-icon>
+                        </div>
+                        <mat-card-title>
+                            {{ step.title }}
+                        </mat-card-title>
+                    </mat-card-header>
+
+                    <mat-card-content>
+                        <p class="home-process-step__description">
+                            {{ step.description }}
+                        </p>
+                    </mat-card-content>
+                </mat-card>
+            </li>
+            }
+        </ol>
+
+        <div class="home-section__cta">
+            <button mat-flat-button color="primary" [routerLink]="'/contact'">
+                <mat-icon aria-hidden="true">mail</mat-icon>
+                <span>Tell me about your army</span>
+            </button>
+        </div>
+    </section>
+</div>

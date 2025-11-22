@@ -1,0 +1,308 @@
+@use '@angular/material' as mat;
+
+/* -------------------------------------------------------------
+   HOST: floating glass toolbar
+------------------------------------------------------------- */
+:host {
+  display: block;
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* -------------------------------------------------------------
+   TOOLBAR SHELL – wide, glassy, portfolio-like
+------------------------------------------------------------- */
+.app-toolbar {
+  pointer-events: auto;
+  box-sizing: border-box;
+  max-width: min(1650px, 96vw);
+  margin-inline: auto;
+  margin-block: 0.9rem;
+  padding-inline: 1.6rem;
+  padding-block: 0.55rem;
+  border-radius: 1.75rem;
+
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  background-color: color-mix(in srgb,
+      var(--mat-sys-surface-container-high) 70%,
+      transparent);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+
+  border: 1px solid color-mix(in srgb,
+      var(--mat-sys-outline-variant) 45%,
+      transparent);
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.42),
+    0 0 0 1px rgba(255, 255, 255, 0.04);
+
+  @include mat.fab-overrides((extended-container-height: 36px,
+      extended-label-text-size: 0.8rem,
+      extended-label-text-weight: 700,
+    ));
+}
+
+/* -------------------------------------------------------------
+   BRAND
+------------------------------------------------------------- */
+.toolbar__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+
+  padding: 0.25rem 0.7rem 0.25rem 0.35rem;
+  border-radius: 999px;
+
+  text-decoration: none;
+  color: inherit;
+
+  transition:
+    background-color 140ms ease-out,
+    transform 110ms ease-out;
+}
+
+.toolbar__brand img {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  object-fit: cover;
+}
+
+.toolbar__brand-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+@media (hover: hover) {
+  .toolbar__brand:hover {
+    background-color: color-mix(in srgb,
+        var(--mat-sys-surface-container-high) 78%,
+        transparent);
+    transform: translateY(-1px);
+  }
+}
+
+.toolbar__spacer {
+  flex: 1 1 auto;
+}
+
+/* -------------------------------------------------------------
+   NAV LINKS – desktop
+------------------------------------------------------------- */
+.toolbar__nav {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.toolbar__nav-link {
+  position: relative;
+
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.78rem;
+  font-weight: 500;
+
+  padding-inline: 0.9rem;
+  padding-block: 0.45rem;
+
+  border-radius: 999px;
+
+  transition:
+    color 140ms ease-out,
+    background-color 140ms ease-out;
+}
+
+@media (hover: hover) {
+  .toolbar__nav-link:hover {
+    background-color: color-mix(in srgb,
+        var(--mat-sys-surface-container-high) 68%,
+        transparent);
+  }
+}
+
+.toolbar__nav-link.is-active,
+.toolbar__nav-link[aria-current='page'] {
+  color: var(--mat-sys-tertiary);
+}
+
+.toolbar__nav-link::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0.28rem;
+  width: 0;
+  height: 3px;
+  border-radius: 999px;
+  background-color: var(--mat-sys-tertiary);
+  transform: translateX(-50%);
+  transition: width 160ms ease-out;
+}
+
+.toolbar__nav-link.is-active::after,
+.toolbar__nav-link[aria-current='page']::after {
+  width: 18px;
+}
+
+/* -------------------------------------------------------------
+   CTA FAB – gradient hero
+------------------------------------------------------------- */
+.toolbar__cta-fab {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  border-radius: 999px;
+
+  background-image: linear-gradient(120deg,
+      var(--mat-sys-tertiary),
+      var(--mat-sys-primary));
+
+  color: var(--mat-sys-on-primary) !important;
+
+  box-shadow:
+    0 0 0 1px color-mix(in srgb,
+      var(--mat-sys-tertiary) 50%,
+      transparent),
+    0 12px 28px rgba(0, 0, 0, 0.44);
+
+  transition:
+    transform 120ms ease-out,
+    box-shadow 150ms ease-out;
+}
+
+@media (hover: hover) {
+  .toolbar__cta-fab:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 0 0 1px color-mix(in srgb,
+        var(--mat-sys-primary) 60%,
+        transparent),
+      0 16px 36px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.toolbar__cta-fab:focus-visible {
+  outline: 3px solid var(--mat-sys-outline);
+  outline-offset: 4px;
+}
+
+/* -------------------------------------------------------------
+   MOBILE MENU TRIGGER
+------------------------------------------------------------- */
+.toolbar__menu-trigger {
+  border-radius: 999px !important;
+  background-color: color-mix(in srgb,
+      var(--mat-sys-surface-container-high) 75%,
+      transparent) !important;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
+
+  transition:
+    transform 110ms ease-out,
+    box-shadow 120ms ease-out;
+}
+
+@media (hover: hover) {
+  .toolbar__menu-trigger:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 22px rgba(0, 0, 0, 0.46);
+  }
+}
+
+/* -------------------------------------------------------------
+   MOBILE MENU CONTENT (wrapper + items)
+------------------------------------------------------------- */
+.toolbar__menu-list {
+  display: flex;
+  flex-direction: column;
+  padding: 0.7rem 0.4rem;
+  min-width: 180px;
+  gap: .25rem;
+}
+
+.toolbar__menu-item {
+  border-radius: 999px !important;
+
+  min-block-size: 3.2rem;
+  padding-inline: 1.1rem 1.4rem;
+  padding-block: 0.95rem;
+  margin-block: 0.25rem;
+
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.8rem;
+  font-weight: 500;
+
+  /* que Angular Material pinte el hover, solo suavizamos el fondo */
+  transition: background-color 140ms ease-out;
+}
+
+.toolbar__menu-item-label {
+  flex: 1;
+}
+
+.toolbar__menu-item-icon {
+  font-size: 1.25rem;
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+}
+
+/* Active route state */
+.toolbar__menu-item.is-active,
+.toolbar__menu-item[aria-current='page'] {
+  background-color: color-mix(in srgb,
+      var(--mat-sys-surface-container-highest) 85%,
+      var(--mat-sys-tertiary-container) 30%);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb,
+      var(--mat-sys-tertiary) 55%,
+      transparent),
+    0 10px 22px rgba(0, 0, 0, 0.38);
+  font-weight: 600;
+  color: var(--mat-sys-tertiary);
+}
+
+/* CTA inside mobile menu – same gradient as toolbar, black text & icon */
+.toolbar__menu-item--cta {
+  margin-block-start: 0.5rem;
+  border-top: 1px solid color-mix(in srgb,
+      var(--mat-sys-outline-variant) 60%,
+      transparent);
+  padding-block-start: 1rem;
+
+  background-image: linear-gradient(120deg,
+      var(--mat-sys-tertiary),
+      var(--mat-sys-primary));
+
+  color: #000 !important;
+
+  .toolbar__menu-item-icon {
+    color: #000 !important;
+  }
+
+  box-shadow: 0 0 0 1px color-mix(in srgb,
+    var(--mat-sys-tertiary) 50%,
+    transparent),
+  0 12px 28px rgba(0, 0, 0, 0.44);
+}
+
+/* -------------------------------------------------------------
+   RESPONSIVE
+------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .app-toolbar {
+    max-width: calc(100vw - 1rem);
+    padding-inline: 1rem;
+    margin-block-start: 0.6rem;
+  }
+}

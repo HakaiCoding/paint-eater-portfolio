@@ -1,0 +1,68 @@
+<mat-toolbar class="app-toolbar" color="primary">
+    <!-- Brand -->
+    <a class="toolbar__brand" routerLink="/" routerLinkActive="is-active" #homeRla="routerLinkActive"
+        [routerLinkActiveOptions]="{ exact: true }" [attr.aria-current]="homeRla.isActive ? 'page' : null"
+        aria-label="Paint Eater Portfolio home">
+        <img ngSrc="assets/logo/paint-eater-logo.webp" width="56" height="56" alt="Paint Eater logo" priority />
+        <span class="toolbar__brand-title">Paint Eater</span>
+    </a>
+
+    <span class="toolbar__spacer" aria-hidden="true"></span>
+
+    @if (!isHandset()) {
+    <!-- Desktop navigation -->
+    <nav class="toolbar__nav" aria-label="Main navigation">
+        @for (link of navLinks; track link.path) {
+        <a mat-button class="toolbar__nav-link" [routerLink]="link.path" routerLinkActive="is-active"
+            #rla="routerLinkActive" [routerLinkActiveOptions]="{ exact: !!link.exact }"
+            [attr.aria-current]="rla.isActive ? 'page' : null">
+            {{ link.label }}
+        </a>
+        }
+    </nav>
+
+    <!-- CTA as extended FAB -->
+    <button type="button" mat-fab extended class="toolbar__cta-fab" [routerLink]="ctaLink.path"
+        aria-label="Go to contact page">
+        <mat-icon>{{ ctaLink.icon }}</mat-icon>
+        {{ ctaLink.label }}
+    </button>
+    } @else {
+    <!-- Mobile menu button -->
+    <button type="button" mat-icon-button class="toolbar__menu-trigger" [matMenuTriggerFor]="navMenu"
+        #menuTrigger="matMenuTrigger" aria-label="Open main navigation" [attr.aria-haspopup]="'menu'"
+        [attr.aria-expanded]="menuTrigger.menuOpen ? 'true' : 'false'">
+        <mat-icon>menu</mat-icon>
+    </button>
+    }
+</mat-toolbar>
+
+<mat-menu #navMenu="matMenu" xPosition="before" aria-label="Main navigation">
+    <!-- Wrapper para controlar spacing sin tocar el panel del overlay -->
+    <div class="toolbar__menu-list">
+        @for (link of navLinks; track link.path) {
+        <button type="button" mat-menu-item class="toolbar__menu-item" [routerLink]="link.path"
+            routerLinkActive="is-active" #rla="routerLinkActive" [routerLinkActiveOptions]="{ exact: !!link.exact }"
+            [attr.aria-current]="rla.isActive ? 'page' : null">
+            <mat-icon class="toolbar__menu-item-icon" aria-hidden="true">
+                {{ link.icon }}
+            </mat-icon>
+
+            <span class="toolbar__menu-item-label">
+                {{ link.label }}
+            </span>
+        </button>
+        }
+
+        <button type="button" mat-menu-item class="toolbar__menu-item toolbar__menu-item--cta"
+            [routerLink]="ctaLink.path" routerLinkActive="is-active" #ctaRla="routerLinkActive"
+            [attr.aria-current]="ctaRla.isActive ? 'page' : null">
+            <mat-icon class="toolbar__menu-item-icon" aria-hidden="true">
+                {{ ctaLink.icon }}
+            </mat-icon>
+            <span class="toolbar__menu-item-label">
+                {{ ctaLink.label }}
+            </span>
+        </button>
+    </div>
+</mat-menu>

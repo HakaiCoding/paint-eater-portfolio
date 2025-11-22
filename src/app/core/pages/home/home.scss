@@ -1,3 +1,620 @@
 :host {
   display: block;
 }
+
+.home-page {
+  max-width: 1120px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem; // espacio entre secciones principales
+}
+
+/* ---------------- HERO ---------------- */
+
+.home-hero {
+  padding-block: 3rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+}
+
+/* EYEBROW ARRIBA DEL TODO – PILL GLASMORPHISM */
+
+.home-hero__eyebrow {
+  align-self: flex-start;
+  padding: 0.45rem 1rem;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  background-color: color-mix(in srgb,
+      var(--mat-sys-surface-container-high) 60%,
+      transparent);
+
+  border-radius: 999px;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.95;
+
+  margin: 0;
+}
+
+/* ---------------- BANNER / LARGE CAROUSEL ---------------- */
+
+.home-hero__banner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.home-hero__banner-viewport {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  background-color: color-mix(in srgb,
+      var(--mat-sys-surface) 80%,
+      transparent);
+
+  border: 1px solid color-mix(in srgb,
+      var(--mat-sys-outline-variant) 45%,
+      transparent);
+
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.03);
+}
+
+/* overlay suave para un look más “cinemático” */
+.home-hero__banner-viewport::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+      rgba(0, 0, 0, 0.18),
+      rgba(0, 0, 0, 0.06) 35%,
+      transparent 65%);
+  pointer-events: none;
+}
+
+/*
+ * La altura la mandan las imágenes.
+ * No forzamos aspect-ratio para evitar distorsiones si alguna imagen
+ * no es exactamente 16:9.
+ */
+.home-hero__banner-track {
+  display: flex;
+  transition: transform 260ms ease-out;
+  will-change: transform;
+}
+
+/* Cada slide ocupa el 100% del viewport */
+.home-hero__banner-slide {
+  flex: 0 0 100%;
+  margin: 0;
+  position: relative;
+}
+
+/* Imagen responsiva, manteniendo su proporción natural */
+.home-hero__banner-slide img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Caption semi-transparente sobre la imagen */
+.home-hero__banner-caption {
+  position: absolute;
+  inset-inline: 1.5rem;
+  inset-block-end: 1.5rem;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background-color: color-mix(in srgb,
+      var(--mat-sys-surface-container-high) 70%,
+      transparent);
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.home-hero__banner-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  opacity: 0.85;
+}
+
+.home-hero__banner-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+/* Controles del banner */
+
+.home-hero__banner-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* Icon buttons “glass” minimalistas para banner + card carrusel */
+.home-hero__banner-controls button[mat-icon-button],
+.home-hero__card-controls button[mat-icon-button] {
+  border-radius: 999px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  background-color: color-mix(in srgb,
+      var(--mat-sys-surface-container-high) 60%,
+      transparent);
+
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+
+  transition:
+    background-color 160ms ease-out,
+    box-shadow 160ms ease-out,
+    transform 120ms ease-out;
+}
+
+.home-hero__banner-controls button[mat-icon-button]:hover,
+.home-hero__card-controls button[mat-icon-button]:hover {
+  background-color: color-mix(in srgb,
+      var(--mat-sys-surface-container-high) 75%,
+      transparent);
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+  transform: translateY(-1px);
+}
+
+.home-hero__banner-controls button[mat-icon-button]:focus-visible,
+.home-hero__card-controls button[mat-icon-button]:focus-visible {
+  outline: 2px solid var(--mat-sys-outline);
+  outline-offset: 3px;
+}
+
+/* Dots compartidos por banner y card carrusel */
+.home-hero__banner-dots,
+.home-hero__card-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.35rem;
+  flex: 1 1 auto;
+}
+
+.home-hero__dot {
+  border: none;
+  padding: 0;
+  margin: 0;
+  width: 14px;
+  height: 4px;
+  border-radius: 999px;
+  background-color: color-mix(in srgb,
+      var(--mat-sys-outline-variant) 40%,
+      transparent);
+  cursor: pointer;
+  transition:
+    background-color 160ms ease-out,
+    transform 160ms ease-out,
+    width 160ms ease-out,
+    opacity 160ms ease-out;
+  opacity: 0.7;
+}
+
+.home-hero__dot.is-active {
+  width: 22px;
+  transform: translateY(-1px);
+  background-color: var(--mat-sys-tertiary);
+  opacity: 1;
+}
+
+/* Visually hidden para accesibilidad en los dots */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* ---------------- HERO CONTENT ---------------- */
+
+.home-hero__content {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.2fr);
+  gap: 2.25rem;
+  align-items: center;
+}
+
+.home-hero__left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.home-hero__title {
+  font-size: clamp(2.1rem, 2.6vw + 1.5rem, 3.1rem);
+  line-height: 1.1;
+  font-weight: 800;
+}
+
+.home-hero__title-highlight {
+  display: inline-block;
+  background: linear-gradient(120deg,
+      var(--mat-sys-tertiary),
+      var(--mat-sys-primary));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.home-hero__subtitle {
+  font-size: 0.98rem;
+  max-width: 34rem;
+  opacity: 0.9;
+}
+
+.home-hero__specialties {
+  mat-chip-set {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  mat-chip {
+    font-size: 0.8rem;
+  }
+}
+
+.home-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+
+  button[mat-flat-button],
+  button[mat-stroked-button] {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-transform: none;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+}
+
+.home-hero__highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.35rem;
+}
+
+.home-hero__highlight {
+  min-width: 90px;
+}
+
+.home-hero__highlight-value {
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.home-hero__highlight-label {
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+
+/* ---------------- Right side: independent card carousel ---------------- */
+
+.home-hero__right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.home-hero__card-carousel {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.home-hero__card-viewport {
+  overflow: hidden;
+  border-radius: 1.25rem;
+}
+
+.home-hero__card-track {
+  display: flex;
+  transition: transform 260ms ease-out;
+  will-change: transform;
+}
+
+.home-hero__art-card {
+  flex: 0 0 100%;
+  width: 100%;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  background-color: color-mix(in srgb,
+      var(--mat-sys-surface-container-high) 70%,
+      transparent);
+  border: 1px solid color-mix(in srgb,
+      var(--mat-sys-outline-variant) 40%,
+      transparent);
+  box-shadow:
+    0 14px 30px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.02);
+}
+
+.home-hero__art-thumb {
+  position: relative;
+  padding: 0.75rem 0.75rem 0.25rem;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 1rem;
+    object-fit: cover;
+  }
+}
+
+.home-hero__art-meta {
+  padding: 0.75rem 1rem 1rem;
+}
+
+.home-hero__art-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  opacity: 0.8;
+}
+
+.home-hero__art-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+.home-hero__art-caption {
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  opacity: 0.9;
+}
+
+.home-hero__card-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ---------------- SECTIONS BASE ---------------- */
+
+.home-section {
+  padding-block: 1.6rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  border-top: 1px solid color-mix(in srgb,
+      var(--mat-sys-outline-variant) 35%,
+      transparent);
+}
+
+.home-section__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.home-section__header>div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.home-section__header--center {
+  justify-content: center;
+  text-align: center;
+
+  button {
+    margin-top: 0.75rem;
+  }
+}
+
+.home-section__title {
+  font-size: 1.45rem;
+  font-weight: 700;
+}
+
+.home-section__subtitle {
+  font-size: 0.96rem;
+  opacity: 0.9;
+  max-width: 32rem;
+}
+
+.home-section__grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+/* Services grid */
+.home-section__grid--services {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* Process grid */
+.home-section__grid--process {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding-left: 0;
+  list-style: none;
+}
+
+/* ---------------- SERVICES ---------------- */
+
+.home-service-card {
+  height: 100%;
+  border-radius: 1rem;
+  background-color: color-mix(in srgb,
+      var(--mat-sys-surface-container-high) 80%,
+      transparent);
+  border: 1px solid color-mix(in srgb,
+      var(--mat-sys-outline-variant) 40%,
+      transparent);
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.02);
+  transition:
+    transform 140ms ease-out,
+    box-shadow 160ms ease-out,
+    border-color 160ms ease-out;
+}
+
+.home-service-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 16px 32px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.03);
+  border-color: color-mix(in srgb,
+      var(--mat-sys-tertiary) 30%,
+      var(--mat-sys-outline-variant) 40%);
+}
+
+.home-service-card .mat-mdc-card-header {
+  align-items: center;
+}
+
+.home-service-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background-color: color-mix(in srgb,
+      var(--mat-sys-tertiary) 16%,
+      transparent);
+}
+
+.home-service-card__description {
+  font-size: 0.9rem;
+  opacity: 0.92;
+}
+
+/* ---------------- PROCESS ---------------- */
+
+.home-process-step mat-card {
+  height: 100%;
+  border-radius: 1rem;
+  background-color: color-mix(in srgb,
+      var(--mat-sys-surface-container-high) 78%,
+      transparent);
+  border: 1px solid color-mix(in srgb,
+      var(--mat-sys-outline-variant) 40%,
+      transparent);
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.02);
+  transition:
+    transform 140ms ease-out,
+    box-shadow 160ms ease-out,
+    border-color 160ms ease-out;
+}
+
+.home-process-step mat-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 16px 32px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.03);
+  border-color: color-mix(in srgb,
+      var(--mat-sys-primary) 30%,
+      var(--mat-sys-outline-variant) 40%);
+}
+
+.home-process-step__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background-color: color-mix(in srgb,
+      var(--mat-sys-primary) 14%,
+      transparent);
+}
+
+.home-process-step__description {
+  font-size: 0.9rem;
+  opacity: 0.92;
+}
+
+.home-section__cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.75rem;
+
+  button[mat-flat-button] {
+    text-transform: none;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
+/* ---------------- RESPONSIVE ---------------- */
+
+@media (max-width: 900px) {
+  .home-hero__content {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .home-hero__right {
+    justify-content: flex-start;
+  }
+
+  .home-section__grid--services,
+  .home-section__grid--process {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .home-page {
+    gap: 2.75rem;
+  }
+
+  .home-section__header {
+    flex-direction: column;
+    align-items: flex-start;
+
+    &--center {
+      align-items: center;
+    }
+  }
+
+  .home-section__grid--services,
+  .home-section__grid--process {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .home-hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+
+    button {
+      justify-content: center;
+    }
+  }
+
+  .home-hero__banner-viewport {
+    border-radius: 1rem;
+  }
+}
